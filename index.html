@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <title>Document</title>
+    <style>
+      .active {
+        border: 1px solid red;
+      }
+      .text-danger {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- real dom -->
+    <a id="google_link">google page</a>
+    <div style="color: blue; font-size: 20px">style test</div>
+    <br />
+    <div class="active text-danger">class test</div>
+    <br />
+
+    <!-- 가상 dom -->
+    <div id="app">
+      {{ message }}
+      <a v-bind:href="google">google page2</a>
+      <a :href="google">google page2</a>
+      <!-- 오브젝트.키 -->
+      <a :href="book.url">{{book.title}}</a><br />
+      <!-- input -->
+      <input
+        v-bind="{name:formInput.name, placeholder:formInput.placeholder}"
+      />
+      <!-- vue 오브젝트가 input 속성과 일치하면 지정하는걸로 전부 대응 -->
+      <input v-bind="formInput" /><br />
+      <div :style="{fontSize:vFontSize}">Style Test2</div>
+      <div :class="{active:isActive}">class Test2</div>
+    </div>
+
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            message: "Hello Vue!",
+            google: "https://google.com",
+            book: {
+              title: "책 타이틀",
+              url: "https://google.com",
+            },
+            formInput: {
+              name: "your_name",
+              placeholder: "이름을 입력해주세요",
+            },
+            vFontSize: "20px", // -(하이픈)은 쓸 수 없음. 쓰고 싶으면 'font-size'라고 해야함.
+            isActive: false, //false: class를 삭제  true : class 추가
+          };
+        },
+      });
+
+      // real
+      const googleLink = document.getElementById("google_link");
+      googleLink.href = "http://google.com";
+    </script>
+  </body>
+</html>
