@@ -17,11 +17,10 @@
   </head>
   <body>
     <!-- real dom -->
-    <a id="google_link">google page</a>
+    <div>기본</div>
+    <a id="google_link">google page</a><br />
     <div style="color: blue; font-size: 20px">style test</div>
-    <br />
     <div class="active text-danger">class test</div>
-    <br />
 
     <!-- 가상 dom -->
     <div id="app">
@@ -38,6 +37,69 @@
       <input v-bind="formInput" /><br />
       <div :style="{fontSize:vFontSize}">Style Test2</div>
       <div :class="{active:isActive}">class Test2</div>
+      <div v-show="isDisplay">표시</div>
+      <div v-if="isDisplay">if 표시</div>
+      <div v-if="signal === 'red'">빨강</div>
+      <div v-else-if="signal === 'yellow'">노랑</div>
+      <div v-else-if="signal === 'blue'">파랑</div>
+      <div v-else>색없음</div>
+      <ul>
+        <li v-for="member in members">{{member}}</li>
+      </ul>
+      <ul>
+        <li v-for="(member, index) in members">{{index}} : {{member}}</li>
+      </ul>
+      <ul>
+        <li v-for="value in book">{{value}}</li>
+      </ul>
+      <ul>
+        <li v-for="(value, key) in book">{{key}} : {{value}}</li>
+      </ul>
+      <ul>
+        <li v-for="(value, key, index) in book">
+          {{index}} : {{key}} : {{value}}
+        </li>
+      </ul>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>TITLE</th>
+            <th>URL</th>
+            <th>AUTHOR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="book in books">
+            <td>{{book.id}}</td>
+            <td>{{book.title}}</td>
+            <td>{{book.url}}</td>
+            <td>{{book.author}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Key 지정 pk -->
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>TITLE</th>
+            <th>URL</th>
+            <th>AUTHOR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="book in books" :key="book.id">
+            <td>{{book.id}}</td>
+            <td>{{book.title}}</td>
+            <td>{{book.url}}</td>
+            <td>{{book.author}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-text="test"></div>
+      <div v-html="test"></div>
     </div>
 
     <script>
@@ -50,6 +112,7 @@
             book: {
               title: "책 타이틀",
               url: "https://google.com",
+              author: "홍준서",
             },
             formInput: {
               name: "your_name",
@@ -57,6 +120,36 @@
             },
             vFontSize: "20px", // -(하이픈)은 쓸 수 없음. 쓰고 싶으면 'font-size'라고 해야함.
             isActive: false, //false: class를 삭제  true : class 추가
+            isDisplay: true,
+            signal: "red",
+            members: ["혼다", "나가토모"],
+            books: [
+              {
+                id: 1,
+                title: "책 타이틀1",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+              {
+                id: 2,
+                title: "책 타이틀2",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+              {
+                id: 3,
+                title: "책 타이틀3",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+              {
+                id: 4,
+                title: "책 타이틀4",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+            ],
+            test: "AAA <br/> BBB",
           };
         },
       });

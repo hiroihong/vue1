@@ -1,0 +1,36 @@
+<!-- vue가 컴파일 완료하기전에 화면이 표시 되면 {{test}} 가 값이 아닌 문자열 그대로 표시되기 때문에
+        컴파일이 완료 된 뒤에 표시 할 수 있도록 cloak하는 방법 -->
+<!-- CSS에 v-cloak 선언하는것 필수 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <style>
+      [v-cloack] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div v-cloack>{{test1}}</div>
+      <div>{{test2}}</div>
+    </div>
+    <script>
+      setTimeout(() => {
+        new Vue({
+          el: "#app",
+          data() {
+            return {
+              test1: "컴파일 후 나타남",
+              test2: "컴파일 전에 변환 안된 상태로 나타남",
+            };
+          },
+        });
+      }, 3000);
+    </script>
+  </body>
+</html>

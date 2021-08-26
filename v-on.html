@@ -1,0 +1,81 @@
+<!-- vue가 컴파일 완료하기전에 화면이 표시 되면 {{test}} 가 값이 아닌 문자열 그대로 표시되기 때문에
+        컴파일이 완료 된 뒤에 표시 할 수 있도록 cloak하는 방법 -->
+<!-- CSS에 v-cloak 선언하는것 필수 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <!-- 리얼돔  -->
+    <div>
+      <button onclick="btnClicked()">Click1</button>
+      <button id="clicked">Click2</button>
+      <button id="clickEvent">ClickEvent</button>
+    </div>
+
+    <form>
+      <button id="prevent" type="submit">송신</button>
+    </form>
+
+    <!-- 가상돔 -->
+    <div id="app">
+      <button v-on:click="btnClicked">vsClick1</button>
+      <!-- 축약버전 -->
+      <button @click="btnClicked">vsClick2</button>
+      <button @click="btnClickedEvent">vsClickEvent</button>
+      <button @click="btnClickedArgs(1)">vsClickArgs</button>
+      <button @click="btnClickedArgsEvent(1, $event)">vsClickArgsEvent</button>
+      <button @click.prevent="btnPrevent">vsPrevent</button>
+      <button @click.stop="btnStop">vsStop</button>
+    </div>
+
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {};
+        },
+        methods: {
+          btnClicked() {
+            console.log("VUE btn clicked");
+          },
+          btnClickedEvent(e) {
+            console.log(e);
+          },
+          btnClickedArgs(val) {
+            console.log(val);
+          },
+          btnClickedArgsEvent(val, e) {
+            console.log(val, e);
+          },
+          btnPrevent() {
+            console.log("PreventDefault");
+          },
+          btnStop() {
+            console.log("StopDefault");
+          },
+        },
+      });
+
+      //JS
+      function btnClicked() {
+        console.log("JS btn clicked");
+      }
+
+      const clickEvent = document.getElementById("clickEvent");
+      clickEvent.addEventListener("click", (e) => {
+        console.log(e);
+      });
+
+      const prevent = document.getElementById("prevent");
+      prevent.addEventListener("click", (e) => {
+        e.preventDefault(); //prevent를 막는다.
+        console.log(e);
+      });
+    </script>
+  </body>
+</html>
