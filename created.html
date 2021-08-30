@@ -1,0 +1,47 @@
+<!-- created 와 mounted의 차이점 
+
+  create 후에 data는 생성됨.
+
+  비동기 통신등 data만 빨리 통신하고 싶을때 보통 사용함.
+
+  mounted 후에 가상 dom이 생성됨.
+  주의점 : 전체 컴퍼넌트가 마운트된다는 보장은 없음
+
+  전체 로딩 후가 보장되는 함수는
+  $nextTixt 함수를 사용.  javascript의 onload 같은거
+
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            test: "aaaaa",
+          };
+        },
+        created() {
+          console.log("created");
+          console.log(this.test);
+          console.log(this.$el);
+        },
+        mounted() {
+          console.log("mounted");
+          console.log(this.test);
+          console.log(this.$el);
+        },
+      });
+    </script>
+  </body>
+</html>

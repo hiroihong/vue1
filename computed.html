@@ -1,0 +1,123 @@
+<!-- method, computed, watch 차이점
+
+method
+메소드
+일반적인 함수
+캐쉬 하지 않음.
+화면 새로고침 할때마다 실행
+
+computed
+산출프로퍼티
+return안에 특정하고 싶은 data를 포함 this.xxx
+캐쉬 함. (데이터가 변경되지 않으면 그 값을 그대로 사용하기 때문에 함수를 다시 부르지 않는다.)
+특정 데이터 변경 할때, 특정 데이터를 원래의 파생했던 데이터를 사용할때 
+
+watch
+감시프로퍼티
+특정하고 싶은 data명으로 작성, 콜백 함수를 포함
+캐쉬 함.
+특정 데이터를 변경 할 때, 특정의 콜백함수를 실행, 비동기처리 ajax등 
+
+
+Vue.set
+Vue의 오브젝트는 기본적으로 getter, setter가 만들어지는데
+app.$data.testObject.testmessage = "ttttt"로 만들면
+getter, setter가 자동적으로 만덜어지지 않음.
+그래서 Vue.set를 사용해서 만들어야함.
+
+Vue.set(app.testObject, "testmessage", "tttttt")
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{totalPriceMethod()}} {{totalPriceMethod()}} {{totalPrice}}
+      {{totalPrice}}
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            price: 1,
+            number: 1,
+            books: [
+              {
+                id: 1,
+                title: "책 타이틀1",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+              {
+                id: 2,
+                title: "책 타이틀2",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+              {
+                id: 3,
+                title: "책 타이틀3",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+              {
+                id: 4,
+                title: "책 타이틀4",
+                url: "https://google.com",
+                author: "홍준서",
+              },
+            ],
+            testObject: {},
+          };
+        },
+        methods: {
+          totalPriceMethod() {
+            console.log("methods입니다");
+            return this.number * this.price;
+          },
+        },
+        computed: {
+          // totalPrice() {
+          //   console.log("computed입니다");
+          //   return this.number * this.price;
+          // },
+
+          totalPrice: (app) => app.number * app.price, //arrow 식으로 쓰게 되면 this는 window 객체를 지정하기 때문에 app 오브젝트 안에 있는 number를 사용할 수 없음
+          //그래서 app 오브젝트를 받아서 app 오브젝트의 정의되어 있는 app.number로 접근해야함.
+        },
+        watch: {
+          //변경을 감시할 오브젝트 명을 선언
+          books: {
+            handler() {
+              console.log("변경된 값이 있습니다.");
+            },
+            deep: true,
+          },
+        },
+      });
+
+      //this의 정의
+      console.log(this); //window 오브젝트를 말한다.
+
+      const obj = {
+        test: function () {
+          console.log(this); //test함수가 정의된 오브젝트 obj가 this가 됨.
+        },
+      };
+
+      const objArrow = {
+        test: () => {
+          console.log(this); //test함수가 정의된 오브젝트 objArrow가 아니라!!! window 오브젝트를 말한다.
+        },
+      };
+    </script>
+  </body>
+</html>
