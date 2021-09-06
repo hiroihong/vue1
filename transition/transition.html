@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .target {
+        transition: opacity 1s;
+      }
+      .target.is-hidden {
+        opacity: 0;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <link href="app.css" rel="stylesheet" />
+  </head>
+  <body>
+    <button id="is-show">JS표시/비표시</button>
+    <div id="target" class="target">JS가 표시된다.</div>
+
+    <div id="app">
+      <button @click="isShow = !isShow">vue표시/비표시</button>
+
+      <transition name="vTran"
+        ><div v-show="isShow">vue가 표시된다.</div></transition
+      >
+    </div>
+
+    <script>
+      const isShow = document.getElementById("is-show");
+      const target = document.getElementById("target");
+
+      isShow.addEventListener("click", () => {
+        target.classList.toggle("is-hidden");
+      });
+
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            isShow: false,
+          };
+        },
+        methods: {
+          vueShow() {},
+        },
+      });
+    </script>
+  </body>
+</html>
