@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <script>
+      let obj = [
+        { id: 1, title: "aaa" },
+        { id: 2, title: "bbb" },
+        { id: 3, title: "ccc" },
+      ];
+
+      //변경
+      obj.splice(2, 1, { id: 4, title: "ddd" });
+
+      console.log(obj);
+
+      //추가
+      obj.splice(3, 0, { id: 5, title: "eee" });
+      console.log(obj);
+    </script>
+  </body>
+</html>
